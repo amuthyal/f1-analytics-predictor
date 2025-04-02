@@ -5,9 +5,10 @@ import Dashboard from './Dashboard';
 import Predictor from './Predictor';
 import LiveRace from './LiveRace';
 import '../styles/HomePage.css';
+import '../styles/Sidebar.css'; // Ensure Sidebar CSS imported here too
 
 const HomePage = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const location = useLocation();
 
@@ -19,26 +20,32 @@ const HomePage = () => {
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    handleResize(); // on mount
+    handleResize(); // Initial setup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Auto-close sidebar on mobile nav
+  // Auto-close sidebar when route changes (on mobile)
   useEffect(() => {
     if (isMobile) setIsSidebarOpen(false);
   }, [location.pathname]);
 
   return (
     <div className={`layout ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} isMobile={isMobile} />
-      <main className="content">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/predictor" element={<Predictor />} />
-          <Route path="/live" element={<LiveRace />} />
-        </Routes>
-      </main>
-    </div>
+  <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} isMobile={isMobile} />
+
+  {isMobile && isSidebarOpen && (
+    <div className="overlay" onClick={() => setIsSidebarOpen(false)} />
+  )}
+
+  <main className="content">
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/predictor" element={<Predictor />} />
+      <Route path="/live" element={<LiveRace />} />
+    </Routes>
+  </main>
+</div>
+
   );
 };
 

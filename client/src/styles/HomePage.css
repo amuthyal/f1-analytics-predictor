@@ -7,14 +7,23 @@
   .content {
     padding: 2rem;
     flex-grow: 1;
+    width: 100%;
     transition: margin-left 0.3s ease;
   }
   
-  .layout.sidebar-open .content {
+  .sidebar-open .content {
     margin-left: 220px;
   }
   
-  .layout.sidebar-closed .content {
+  .sidebar-closed .content {
     margin-left: 0;
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Always use full width on mobile, sidebar overlay won't affect margin */
+    .sidebar-open .content,
+    .sidebar-closed .content {
+      margin-left: 0 !important;
+    }
   }
   

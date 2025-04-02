@@ -9,10 +9,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
+    z-index: 1200; /* overlay above content */
+    transition: transform 0.3s ease;
   }
-  
   .sidebar h2 {
     margin-bottom: 2rem;
     font-size: 1.4rem;
@@ -39,17 +38,39 @@
     background-color: #2e2e42;
     color: #ffcc00;
   }
+  /* Mobile hidden state */
+.sidebar.mobile {
+    transform: translateX(-100%);
+  }
   
-  .hamburger {
+  /* Mobile visible state */
+  .sidebar.mobile.open {
+    transform: translateX(0);
+  }
+
+
+ 
+.hamburger {
     display: none;
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 1100;
+    z-index: 1300; /* above sidebar */
     background: transparent;
     border: none;
     font-size: 1.8rem;
     color: #fff;
+  }
+  
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1100;
   }
   
   @media screen and (max-width: 768px) {
@@ -62,7 +83,9 @@
       top: 0;
       z-index: 1000;
     }
-  
+    .overlay {
+        display: none;
+      }
     .hamburger {
       display: block;
     }
