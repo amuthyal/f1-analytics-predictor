@@ -1,0 +1,15 @@
+.pitstop-chart-container {
+    background-color: #1f2833;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-bottom: 2rem;
+  }
+  
+  .pitstop-chart-title {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  

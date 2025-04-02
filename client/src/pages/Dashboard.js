@@ -1,30 +1,50 @@
-import React from 'react';
-import '../styles/Dashboard.css';
+import React, { useState, useEffect } from 'react';
 import LapTimeChart from '../components/LapTimeChart';
-import TireUsageChart from '../components/TireUsageChart';
 import PitStopChart from '../components/PitStopChart';
+import TireUsageChart from '../components/TireUsageChart';
+import RaceSelector from '../components/RaceSelector';
+import RaceTracker from '../components/RaceTracker';
+import { getRaceResultsByRound } from '../services/ergastApi';
+import '../styles/Dashboard.css';
 
 const Dashboard = () => {
-  const laps = ['Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5'];
-  const lapTimes = [88.2, 87.6, 87.3, 88.1, 87.9];
+  const [selectedRound, setSelectedRound] = useState('');
+  const [raceData, setRaceData] = useState([]);
 
-  const tireData = {
-    Soft: 15,
-    Medium: 25,
-    Hard: 5,
-    Intermediate: 0,
-  };
+  const tireData = { Soft: 14, Medium: 18, Hard: 7, Intermediate: 1 }; // Sample data for now
 
-  const pitStops = [2.8, 3.1, 2.6];
+  useEffect(() => {
+    if (selectedRound) {
+      getRaceResultsByRound(2024, selectedRound).then((data) => {
+        const formatted = data.map(driver => ({
+          position: driver.position,
+          driverName: `${driver.Driver.givenName} ${driver.Driver.familyName}`,
+          nationality: driver.Driver.nationality,
+          team: driver.Constructor.name,
+          lastLap: driver.FastestLap?.Time?.time || 'N/A',
+          points: driver.points
+        }));
+        setRaceData(formatted);
+      });
+    }
+  }, [selectedRound]);
 
   return (
     <div className="dashboard-container">
       <h1>🏁 F1 Race Performance Dashboard</h1>
-      <LapTimeChart title="Lap Times (s)" labels={laps} dataPoints={lapTimes} />
-      <h2>Tire Compound Usage</h2>
-      <TireUsageChart data={tireData} />
-      <h2>Pit Stop Durations</h2>
-      <PitStopChart pitStops={pitStops} />
+
+      <RaceSelector selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
+
+      {selectedRound && raceData.length > 0 && (
+        <>
+          <RaceTracker drivers={raceData} />
+
+          <h2>Tire Compound Usage (Sample Data)</h2>
+          <TireUsageChart data={tireData} />
+
+          {/* Future analytics based on selectedRound can be added here */}
+        </>
+      )}
     </div>
   );
 };

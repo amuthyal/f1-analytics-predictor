@@ -1,0 +1,55 @@
+.race-tracker-container {
+    background-color: #13141d;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    overflow-x: auto;
+  }
+  
+  .race-tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .race-tracker-table th,
+  .race-tracker-table td {
+    text-align: left;
+    padding: 0.7rem;
+    border-bottom: 1px solid #282a36;
+    vertical-align: middle;
+  }
+  
+  .race-tracker-table th {
+    color: #ff3c00;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+  
+  .driver-name,
+  .team-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .flag-icon {
+    width: 25px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 8px;
+    border-radius: 2px;
+  }
+  
+  .team-logo {
+    width: 40px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  
+  
+  .position {
+    font-weight: bold;
+  }
+  
