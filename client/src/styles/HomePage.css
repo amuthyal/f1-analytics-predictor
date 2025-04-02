@@ -1,0 +1,20 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0f0f1a;
+  }
+  
+  .content {
+    padding: 2rem;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .layout.sidebar-open .content {
+    margin-left: 220px;
+  }
+  
+  .layout.sidebar-closed .content {
+    margin-left: 0;
+  }
+  

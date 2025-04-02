@@ -1,0 +1,13 @@
+.dashboard-container {
+    background-color: #0f0f1a;
+    color: #eee;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  
+  .dashboard-container h1,
+  .dashboard-container h2 {
+    color: #ffcc00;
+    margin-bottom: 1rem;
+  }
+  
