@@ -1,0 +1,17 @@
+/* styles/RaceSelectionForm.css */
+.race-selector-form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .race-selector-form label {
+    color: #fff;
+  }
+  .race-selector-form select,
+  .race-selector-form button {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  

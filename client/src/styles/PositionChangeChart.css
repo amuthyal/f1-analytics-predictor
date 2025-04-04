@@ -1,0 +1,14 @@
+.position-change-chart-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #13141d;
+    border-radius: 8px;
+    color: #ffffff;
+  }
+  
+  .position-change-chart-container h2 {
+    margin-bottom: 1rem;
+    color: #ffcc00;
+    font-size: 1.2rem;
+  }
+  

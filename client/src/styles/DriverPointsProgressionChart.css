@@ -1,0 +1,13 @@
+.driver-points-chart-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #13141d;
+    border-radius: 8px;
+    color: #fff;
+  }
+  
+  .driver-points-chart-container h2 {
+    margin-bottom: 1rem;
+    color: #ffcc00;
+  }
+  
