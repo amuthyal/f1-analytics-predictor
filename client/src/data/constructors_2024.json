@@ -1,0 +1,42 @@
+[
+  {
+    "constructorId": 1,
+    "name": "McLaren"
+  },
+  {
+    "constructorId": 3,
+    "name": "Williams"
+  },
+  {
+    "constructorId": 6,
+    "name": "Ferrari"
+  },
+  {
+    "constructorId": 9,
+    "name": "Red Bull"
+  },
+  {
+    "constructorId": 15,
+    "name": "Sauber"
+  },
+  {
+    "constructorId": 117,
+    "name": "Aston Martin"
+  },
+  {
+    "constructorId": 131,
+    "name": "Mercedes"
+  },
+  {
+    "constructorId": 210,
+    "name": "Haas F1 Team"
+  },
+  {
+    "constructorId": 214,
+    "name": "Alpine F1 Team"
+  },
+  {
+    "constructorId": 215,
+    "name": "RB F1 Team"
+  }
+]

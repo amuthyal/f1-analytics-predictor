@@ -1,0 +1,39 @@
+.predictor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.predictor-form label {
+  font-weight: 500;
+}
+
+.predictor-form input,
+.predictor-form select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.predictor-form button {
+  padding: 0.6rem;
+  background-color: #e10600;
+  color: white;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.predictor-form button:hover {
+  background-color: #c00000;
+  transform: scale(1.02);
+}
+

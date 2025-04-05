@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Dashboard from './Dashboard';
 import Predictor from './Predictor';
-import LiveRace from './LiveRace';
 import '../styles/HomePage.css';
 import '../styles/Sidebar.css'; // Ensure Sidebar CSS imported here too
 
@@ -41,7 +40,6 @@ const HomePage = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/predictor" element={<Predictor />} />
-      <Route path="/live" element={<LiveRace />} />
     </Routes>
   </main>
 </div>

@@ -12,39 +12,6 @@ export const getLastRaceResults = async () => {
     return null;
   }
 };
-
-// Fetch pit stops for last race
-export const getLastRacePitStops = async () => {
-  try {
-    const response = await axios.get(`${API_BASE}/current/last/pitstops.json?limit=100`);
-    return response.data.MRData.RaceTable.Races[0]?.PitStops;
-  } catch (error) {
-    console.error('Error fetching pit stop data:', error);
-    return [];
-  }
-};
-
-export const getLastRaceDriverStandings = async () => {
-    try {
-      const response = await axios.get(`${API_BASE}/current/last/results.json`);
-      const race = response.data.MRData.RaceTable.Races[0];
-      if (race && race.Results) {
-        return race.Results.map(driver => ({
-          position: driver.position,
-          driverName: `${driver.Driver.givenName} ${driver.Driver.familyName}`,
-          driverCode: driver.Driver.code,
-          nationality: driver.Driver.nationality,
-          team: driver.Constructor.name,
-          lastLap: driver.FastestLap ? driver.FastestLap.Time.time : 'N/A',
-          points: driver.points,
-        }));
-      }
-      return [];
-    } catch (error) {
-      console.error('Error fetching driver standings:', error);
-      return [];
-    }
-  };
   
   // Get list of all 2024 races
 export const getAllRacesForSeason = async (season = 2024) => {
