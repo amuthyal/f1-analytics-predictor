@@ -2,6 +2,8 @@
 
 An interactive web app to predict Formula 1 podium finishes and visualize driver & team performance using real-time and historical data.
 
+---
+
 ## 🚀 Features
 
 - 🔮 Predict top 3 race finishers based on qualifying performance (ML ranking model)
@@ -15,8 +17,8 @@ An interactive web app to predict Formula 1 podium finishes and visualize driver
 
 ## 🧱 Tech Stack
 
-| Frontend        | Backend       | ML / Data         |
-|-----------------|---------------|-------------------|
+| Frontend        | Backend        | ML / Data         |
+|-----------------|----------------|-------------------|
 | React + Axios   | Python + Flask | LightGBM (Ranker) |
 | Recharts        | FastF1 API     | pandas + joblib   |
 
@@ -29,94 +31,99 @@ An interactive web app to predict Formula 1 podium finishes and visualize driver
 | ![Podium](docs/podium.png) | ![Drivers](docs/driver-chart.png) |
 
 ---
-### 🧠 Machine Learning Model
 
-## 🔍 Problem Statement
+## 🧠 Machine Learning Model
 
-We aim to predict the top 3 finishers (podium positions) in a Formula 1 race before the race happens, using qualifying data — particularly from Q3. The challenge is framed as a ranking problem, where we assign a “score” to each driver and select the lowest three as the predicted podium.
+### 🔍 Problem Statement
 
-## ⚙️ Model Overview
-Model Used	Type	Library
-LightGBM Ranker	Learning-to-rank	LightGBM
-We chose LightGBM's ranking model (lambdarank) because:
+We aim to predict the **top 3 finishers** (podium positions) in a Formula 1 race **before the race**, using qualifying data — particularly Q3 results. The problem is framed as a **ranking task**, where each driver is scored and the lowest three are selected as podium finishers.
 
-It supports ranking tasks out of the box
+---
 
-Efficient with large datasets
+### ⚙️ Model Overview
 
-Easy to train and deploy
+| Model Used     | Type             | Library   |
+|----------------|------------------|-----------|
+| LightGBM Ranker | Learning-to-rank | LightGBM  |
 
-Performs well even with relatively few features
+We use LightGBM's `lambdarank` algorithm because it:
 
-## 📊 Features Used   Feature Description
+- Supports ranking tasks out of the box
+- Is efficient with large datasets
+- Is easy to train and deploy
+- Performs well with limited features
 
-grid	              Starting grid position of the driver
+---
 
-constructorId	      Numeric ID representing the constructor
+### 📊 Features Used
 
-q1_seconds	          Q3 lap time in seconds (model expects this column name even though it's Q3)
+| Feature         | Description                                |
+|-----------------|--------------------------------------------|
+| `grid`          | Starting grid position of the driver       |
+| `constructorId` | Numeric ID representing the constructor     |
+| `q1_seconds`    | Q3 lap time in seconds                      |
 
-📌 Note: We only include drivers with valid Q3 times for more reliable predictions.
+📌 **Note:** Only drivers with valid Q3 times are included for accurate predictions.
 
-## 🧪 Model Training Details
+---
 
-# Dataset
-Based on Kaggle’s F1 dataset (1950–2024)
+### 🧪 Model Training Details
 
-Filtered to only include races from 2000 to 2024
+#### 📁 Dataset
+- Based on Kaggle’s Formula 1 dataset (1950–2024)
+- Filtered to include only seasons from **2000 to 2024**
+- Joined: `results.csv`, `qualifying.csv`, `drivers.csv`, `constructors.csv`, `races.csv`
 
-Joined: results.csv, qualifying.csv, drivers.csv, constructors.csv, races.csv
+#### 🧹 Preprocessing
+- Dropped rows with missing values in required columns
+- Converted lap times (timedelta) to seconds
+- Kept only drivers who reached Q3
 
-# Preprocessing
-Removed rows with missing values in required columns
+#### 🧪 Train-Test Split
+- Split by `raceId` to simulate real-time race prediction
+- 80% of races for training, 20% for testing
 
-Converted lap times from timedelta to seconds
+---
 
-Only kept drivers who made it to Q3 (most relevant for podium)
+### 📈 Evaluation Metrics
 
-# Train-Test Split
-Split by raceId (not random!) to simulate real-time race prediction
+| Metric             | Description                                  | Value (Sample) |
+|--------------------|----------------------------------------------|----------------|
+| **MAE**            | Mean Absolute Error of predicted positions   | ~11.5          |
+| **RMSE**           | Root Mean Squared Error                      | ~12.9          |
+| **Kendall’s Tau**  | Rank correlation between predicted & actual  | ~0.33          |
+| **Top-3 Accuracy** | % of correctly predicted podium finishers    | ~43%           |
 
-80% of races for training, 20% for testing
+---
 
-# Evaluation Metrics
+### 💾 Saved Model
 
-Metric	                     Description	Value (Sample)
-MAE	                         Mean Absolute Error of predicted finish positions	~11.5
-RMSE	                     Root Mean Squared Error	~12.9
-Kendall's Tau	             Rank correlation between predicted & actual	~0.33
-Top-3 Accuracy	             % of correctly predicted podium finishers	~43%
+- **Filename:** `top3_rank_predictor.pkl`
+- **Location:** `/server/ml_models/`
+- **Loaded by:** Flask backend at startup
+- **Endpoint:**  
+  `GET /api/ml/predict-top3/rank-model?year=YYYY&round=ROUND`
 
-# 💾 Saved Model
-Filename: top3_rank_predictor.pkl
+---
 
-Location: /ml_models/
+### 🔄 Future Improvements
 
-Loaded at Flask startup
+- Add driver & team performance trends
+- Integrate track/weather conditions
+- Use ensemble methods or neural nets
+- Add real-time post-quali updates
+- Display podium prediction confidence
 
-Served via:
-GET /api/ml/predict-top3/rank-model?year=YYYY&round=N
-
-### 🔄 Future Improvements (Planned)
-
-# Include more features:
-
-Driver & team points up to the race
-
-Average Q3 performance
-
-Track type / weather conditions
-
-Use ensemble models or neural networks for experimentation
-
-Real-time live updates with post-quali data
+---
 
 ## 🔧 Getting Started
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/f1-analytics-predictor.git
 cd f1-analytics-predictor
+
 
 ### 2. Install Dependencies
 
@@ -151,7 +158,7 @@ Returns:
   { "position": 1, "driver": "VER", "team": "Red Bull", "grid": 1 }
 ]
 
-📂 Folder Structure
+# 📂 Folder Structure
 bash
 Copy
 Edit
@@ -160,7 +167,7 @@ server/fastf1/   # Flask backend + ML model
 ml/              # Training scripts + data
 public/          # Static assets
 
-🧹 Cleanup Notes
+### 🧹 Cleanup Notes
 ✅ Removed unused FastF1 controller (Node)
 
 ✅ Removed placeholder Firebase/socket files
@@ -169,17 +176,17 @@ public/          # Static assets
 
 ✅ Loads Q3 only for better podium prediction
 
-📘 Credits
+### 📘 Credits
 FastF1 – F1 data API
 
 Ergast API – Historical F1 results
 
 LightGBM – Ranking-based ML model
 
-📜 License
+### 📜 License
 MIT — Feel free to fork, extend, and build on it!
 
-🙌  Contributions Welcome
+### 🙌  Contributions Welcome
 Have a feature in mind or want to refine the ML model? PRs are always welcome!
 
 Let me know if you'd like:
